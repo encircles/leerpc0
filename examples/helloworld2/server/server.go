@@ -1,10 +1,23 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"time"
 
 	"github.com/encircles/leerpc0"
+	"github.com/encircles/leerpc0/examples/helloworld2/helloworld"
 )
+
+type greeterService struct{}
+
+func (g *greeterService) SayHello(ctx context.Context, req *helloworld.HelloRequest) (*helloworld.HelloReply, error) {
+	fmt.Println("recv Msg : ", req.Msg)
+	rsp := &helloworld.HelloReply{
+		Msg: req.Msg + " world",
+	}
+	return rsp, nil
+}
 
 func main() {
 	opts := []leerpc0.ServerOption{
@@ -14,6 +27,9 @@ func main() {
 		leerpc0.WithTimeout(time.Millisecond * 2000),
 	}
 
-	_ = leerpc0.NewServer(opts...)
+	s := leerpc0.NewServer(opts...)
 
+	helloworld.RegisterService(s, &greeterService{})
+
+	s.Serve()
 }

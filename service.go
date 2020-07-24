@@ -2,11 +2,19 @@ package leerpc0
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
+	"github.com/golang/protobuf/proto"
+
+	"github.com/encircles/leerpc0/codec"
+	"github.com/encircles/leerpc0/codes"
 	"github.com/encircles/leerpc0/interceptor"
 	"github.com/encircles/leerpc0/logger"
+	"github.com/encircles/leerpc0/metadata"
+	"github.com/encircles/leerpc0/protocol"
 	"github.com/encircles/leerpc0/transport"
+	"github.com/encircles/leerpc0/utils"
 )
 
 type Service interface {
@@ -88,5 +96,49 @@ func (s *service) Name() string {
 
 func (s *service) Handle(ctx context.Context, reqbuf []byte) ([]byte, error) {
 	// parse protocol header
-	panic("implement me")
+	request := &protocol.Request{}
+	if err := proto.Unmarshal(reqbuf, request); err != nil {
+		return nil, err
+	}
+
+	ctx = metadata.WithServerMetadata(ctx, request.Metadata)
+
+	serverSerialization := codec.GetSerialization(s.opts.serializationType)
+
+	dec := func(req interface{}) error {
+
+		if err := serverSerialization.Unmarshal(request.Payload, req); err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	if s.opts.timeout != 0 {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, s.opts.timeout)
+		defer cancel()
+	}
+
+	_, method, err := utils.ParseServicePath(string(request.ServicePath))
+	if err != nil {
+		return nil, codes.New(codes.ClientMsgErrorCode, "method is invalid")
+	}
+
+	handler := s.handlers[method]
+	if handler == nil {
+		return nil, errors.New("handlers is nil")
+	}
+
+	rsp, err := handler(ctx, s.svr, dec, s.opts.interceptors)
+	if err != nil {
+		return nil, err
+	}
+
+	rspbuf, err := serverSerialization.Marshal(rsp)
+	if err != nil {
+		return nil, err
+	}
+
+	return rspbuf, nil
 }
