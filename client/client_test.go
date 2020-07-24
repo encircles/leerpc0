@@ -5,9 +5,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lubanproj/gorpc"
-	"github.com/lubanproj/gorpc/testdata"
 	"github.com/stretchr/testify/assert"
+
+	gorpc "github.com/encircles/leerpc0"
+
+	"github.com/encircles/leerpc0/testdata"
 )
 
 func TestCall(t *testing.T) {

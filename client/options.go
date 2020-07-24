@@ -3,8 +3,9 @@ package client
 import (
 	"time"
 
-	"github.com/lubanproj/gorpc/auth"
-	"github.com/lubanproj/gorpc/interceptor"
+	"github.com/encircles/leerpc0/auth"
+
+	"github.com/encircles/leerpc0/interceptor"
 
 	"github.com/encircles/leerpc0/transport"
 )
