@@ -14,9 +14,16 @@ func TestRegisterCodec(t *testing.T) {
 }
 
 func TestDefaultCodec_Decode(t *testing.T) {
-
+	c := DefaultCodec
+	bytes, err := c.Encode([]byte("test"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(bytes)
 }
 
 func TestDefaultCodec_Encode(t *testing.T) {
-
+	var b []byte
+	b = append(b, 0)
+	_ = b[0]
 }
