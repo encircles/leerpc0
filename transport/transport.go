@@ -69,6 +69,7 @@ func (f *framer) ReadFrame(conn net.Conn) ([]byte, error) {
 		return nil, codes.NewFrameworkError(codes.ClientMsgErrorCode, "payload too large...")
 	}
 
+	// 12 次刚好是 4 * 1024 * 1024
 	for uint32(len(f.buffer)) < length && f.counter <= 12 {
 		f.buffer = make([]byte, len(f.buffer)*2)
 		f.counter++
