@@ -1,6 +1,7 @@
 package codec
 
 import (
+	"fmt"
 	"io"
 	"strings"
 	"testing"
@@ -54,6 +55,9 @@ func TestDefaultCodec_Encode(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("%d", de)
+
+	t.Logf("%[1]v %[1]T %[1]d %[1]X", 0x010A)
+	fmt.Println()
 
 	//s := strings.NewReader("HELLO WORLD!")
 	//buf := make([]byte, s.Len()) // 创建缓冲区 buf
