@@ -1,9 +1,10 @@
 package codec
 
 import (
-	"fmt"
 	"io"
+	"strings"
 	"testing"
+	"unsafe"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -16,31 +17,49 @@ func TestRegisterCodec(t *testing.T) {
 }
 
 func TestDefaultCodec_Decode(t *testing.T) {
-	c := DefaultCodec
-	bytes, err := c.Encode([]byte("test"))
+
+	//var b strings.Builder
+	//s := []string{"123", "456"}
+	//l := len(s)
+	//for i := 0; i < l; i++ {
+	//	b.WriteString(s[i])
+	//}
+	//t.Log(b.String())
+
+	d := DefaultCodec
+	bytes, err := d.Decode([]byte("123456789012345test"))
 	if err != nil {
-		t.Fatal(err)
+		panic(err)
 	}
 	t.Log(bytes)
+	p := (*string)(unsafe.Pointer(&bytes))
+	t.Log(p)
+	t.Log(*p)
 }
 
 func TestDefaultCodec_Encode(t *testing.T) {
-	s := NewUstr("Hello World!")   // 创建 Ustr 对象 s
-	buf := make([]byte, s.Len()-3) // 创建缓冲区 buf
 
-	n, err := io.ReadFull(s, buf) // 将 s 中的数据读取到 buf 中
+	var s strings.Builder
+	s.WriteString("this is test string")
 
-	fmt.Printf("%s\n", buf) // HELLO WORLD!
-	fmt.Println(n, err)     // 12 <nil>
+	d := DefaultCodec
+	en, err := d.Encode([]byte(s.String()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("%d", en)
 
-	buf2 := make([]byte, 3)
-	n, err = io.ReadFull(s, buf2) // 将 s 中的数据读取到 buf 中
+	de, err := d.Decode(en)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("%d", de)
 
-	//n, err = io.ReadFull(s, buf) // 将
-	//fmt.Printf("%s\n", buf) // HELLO WORLD!
-
-	fmt.Printf("%s\n", buf2) // HELLO WORLD!
-	fmt.Println(n, err)      // 12 <nil>
+	//s := strings.NewReader("HELLO WORLD!")
+	//buf := make([]byte, s.Len()) // 创建缓冲区 buf
+	//n, err := io.ReadFull(s, buf) // 将 s 中的数据读取到 buf 中
+	//t.Logf("%s\n", buf) // HELLO WORLD!
+	//t.Log(n, err)     // 12 <nil>
 }
 
 // 定义一个 Ustr 类型
