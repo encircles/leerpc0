@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/golang/protobuf/proto"
+
 	"github.com/encircles/leerpc0/interceptor"
 	"github.com/encircles/leerpc0/metadata"
-	"github.com/golang/protobuf/proto"
 
 	"github.com/encircles/leerpc0/codec"
 	"github.com/encircles/leerpc0/codes"

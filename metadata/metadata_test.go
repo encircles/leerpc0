@@ -2,8 +2,9 @@ package metadata
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestClientMetadata(t *testing.T) {

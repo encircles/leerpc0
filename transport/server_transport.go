@@ -6,13 +6,14 @@ import (
 	"net"
 	"time"
 
+	"github.com/golang/protobuf/proto"
+
 	"github.com/encircles/leerpc0/codec"
 	"github.com/encircles/leerpc0/codes"
 	"github.com/encircles/leerpc0/logger"
 	"github.com/encircles/leerpc0/protocol"
 	"github.com/encircles/leerpc0/stream"
 	"github.com/encircles/leerpc0/utils"
-	"github.com/golang/protobuf/proto"
 )
 
 type serverTransport struct {

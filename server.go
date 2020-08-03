@@ -256,7 +256,7 @@ func (s *Server) InitPlugins() error {
 			}
 
 		// TODO jaeger
-		//s.opts.interceptors = append(s.opts.interceptors, jaeger.OpenTracingServerInterceptor(tracer, s.opts.tracingSpanName))
+		// s.opts.interceptors = append(s.opts.interceptors, jaeger.OpenTracingServerInterceptor(tracer, s.opts.tracingSpanName))
 
 		default:
 

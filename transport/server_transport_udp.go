@@ -2,10 +2,11 @@ package transport
 
 import (
 	"context"
-	"github.com/encircles/leerpc0/logger"
-	"github.com/encircles/leerpc0/stream"
 	"net"
 	"time"
+
+	"github.com/encircles/leerpc0/logger"
+	"github.com/encircles/leerpc0/stream"
 )
 
 func (s *serverTransport) ListenAndServeUdp(ctx context.Context, opts ...ServerTransportOption) error {

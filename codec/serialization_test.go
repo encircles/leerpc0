@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/encircles/leerpc0/protocol"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/encircles/leerpc0/protocol"
 )
 
 func TestPbSerializationMarshal(t *testing.T) {

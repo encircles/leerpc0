@@ -19,13 +19,13 @@ func TestRegisterCodec(t *testing.T) {
 
 func TestDefaultCodec_Decode(t *testing.T) {
 
-	//var b strings.Builder
-	//s := []string{"123", "456"}
-	//l := len(s)
-	//for i := 0; i < l; i++ {
+	// var b strings.Builder
+	// s := []string{"123", "456"}
+	// l := len(s)
+	// for i := 0; i < l; i++ {
 	//	b.WriteString(s[i])
-	//}
-	//t.Log(b.String())
+	// }
+	// t.Log(b.String())
 
 	d := DefaultCodec
 	bytes, err := d.Decode([]byte("123456789012345test"))
@@ -59,11 +59,11 @@ func TestDefaultCodec_Encode(t *testing.T) {
 	t.Logf("%[1]v %[1]T %[1]d %[1]X", 0x010A)
 	fmt.Println()
 
-	//s := strings.NewReader("HELLO WORLD!")
-	//buf := make([]byte, s.Len()) // 创建缓冲区 buf
-	//n, err := io.ReadFull(s, buf) // 将 s 中的数据读取到 buf 中
-	//t.Logf("%s\n", buf) // HELLO WORLD!
-	//t.Log(n, err)     // 12 <nil>
+	// s := strings.NewReader("HELLO WORLD!")
+	// buf := make([]byte, s.Len()) // 创建缓冲区 buf
+	// n, err := io.ReadFull(s, buf) // 将 s 中的数据读取到 buf 中
+	// t.Logf("%s\n", buf) // HELLO WORLD!
+	// t.Log(n, err)     // 12 <nil>
 }
 
 // 定义一个 Ustr 类型
